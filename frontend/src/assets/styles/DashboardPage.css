@@ -1,0 +1,98 @@
+.dashboard-page {
+    display: flex;
+    min-height: 100vh;
+}
+
+.dashboard {
+    flex-grow: 1;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .dashboard-cards {
+        display: flex;
+        justify-content: space-around;
+        gap: 2rem;
+        margin-bottom: 30px;
+        /* Add margin below cards */
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            flex: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            /* Lift effect on hover */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            /* Deeper shadow on hover */
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            font-size: 1.4em;
+            color: #fff;
+        }
+
+        .card p {
+            font-size: 2em;
+            font-weight: 550;
+        }
+
+        .products {
+            background-color: #004cd0;
+        }
+
+        .categories {
+            background-color: #ff8c00;
+        }
+
+        .sales {
+            background-color: #6f42c1;
+        }
+
+        .low-stock {
+            background-color: #716b38;
+        }
+
+    }
+
+    h3+ul {
+        list-style: none;
+        margin-top: 20px;
+    }
+
+    ul li {
+        background-color: #f0f0f0;
+        /* Light gray background */
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        /* Spacing between items */
+        display: flex;
+        /* Flexbox for alignment */
+        justify-content: space-between;
+        /* Space between name and value */
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow */
+    }
+
+    ul li:last-child {
+        margin-bottom: 0;
+        /* Remove margin for the last item */
+    }
+
+    h3 {
+        margin-top: 30px;
+        font-size: 1.3rem;
+        color: #333;
+    }
+}

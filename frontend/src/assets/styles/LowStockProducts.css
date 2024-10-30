@@ -1,0 +1,23 @@
+.low-stock-products {
+    margin: 20px;
+}
+
+.low-stock-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.low-stock-table th, .low-stock-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.low-stock-table th {
+    background-color: #f4f4f4;
+}
+
+.low-stock-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

@@ -1,0 +1,28 @@
+.main-content::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: #f4f4f4; /* Background of the scrollbar track */
+    border-radius: 8px; /* Rounded corners for the track */
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: #b0b0b0; /* Color of the scrollbar handle */
+    border-radius: 8px; /* Rounded corners for the handle */
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: #686868; /* Darker shade on hover */
+}
+
+.layout {
+    display: flex;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: scroll;
+    height: 93.5vh;
+}

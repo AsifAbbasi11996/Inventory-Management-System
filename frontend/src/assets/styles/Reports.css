@@ -1,0 +1,49 @@
+.reports {
+    border-radius: 8px;
+}
+
+.reports h2 {
+    margin-bottom: 20px;
+}
+
+.report-type-selector {
+    margin-bottom: 20px;
+}
+
+.report-type-selector label {
+    margin-right: 20px;
+}
+
+.date-range {
+    margin-bottom: 20px;
+}
+
+.date-range label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.date-range input[type="date"] {
+    margin-left: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+.report-results {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+}

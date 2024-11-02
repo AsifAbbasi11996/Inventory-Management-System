@@ -1,19 +1,12 @@
 .sidebar {
-    width: 200px;
+    width: 250px;
     background-color: #6d3f82;
     color: #fff;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    height: 100vh;
-
-    h2 {
-        font-size: 1.5em;
-        font-weight: 550;
-        padding: 20px;
-        background-color: rgb(29, 29, 85);
-    }
 
     ul {
         list-style-type: none;
+
     }
 
     a {

@@ -37,7 +37,6 @@ const addProduct = async (req, res) => {
 
 // Update product by barcode
 const updateProduct = async (req, res) => {
-  console.log(req.body); // Log incoming request data
   try {
     // Update the product based on the provided barcode and request body
     const product = await Product.findOneAndUpdate(

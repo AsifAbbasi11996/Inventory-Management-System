@@ -1,4 +1,4 @@
-.product-list_container {
+.user-list_container {
 
     h2{
         margin-bottom: 20px;
@@ -11,8 +11,8 @@
         gap: 2rem;
 
         .rows,
-        .category,
-        .search_product {
+        .role,
+        .search_user {
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -43,6 +43,7 @@
 
             option{
                 font-size: 1rem;
+                text-transform: capitalize;
             }
         }
     }

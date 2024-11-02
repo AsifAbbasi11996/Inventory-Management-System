@@ -1,0 +1,29 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #4ba1eb;
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        column-gap: 1rem;
+
+        p{
+            span{
+                font-weight: 550;
+            }
+        }
+
+        .logout{
+            display: flex;
+            align-items: center;
+            column-gap: 0.5rem;
+            cursor: pointer;
+        }
+        .logout:hover{
+            text-decoration: underline;
+        }
+    }
+}

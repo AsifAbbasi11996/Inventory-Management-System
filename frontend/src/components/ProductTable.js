@@ -1,8 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../assets/styles/ProductTable.css';
+import { MdEdit, MdDelete } from "react-icons/md";
 import { formatDate } from '../utils/formatDate';
+import { formatPrice } from '../utils/formatPrice.js';
+import { updateProduct } from '../api/productApi.js';
+import EditProduct from './EditProduct';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
-const ProductTable = ({ products, onDelete }) => {
+const ProductTable = ({ products, onDelete, setProducts }) => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedBarcode, setSelectedBarcode] = useState('');
+
+    const handleEditClick = (product) => {
+        setSelectedProduct(product);
+        setIsEditModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsEditModalOpen(false);
+        setSelectedProduct(null);
+    };
+
+    const handleSave = async (updatedProduct) => {
+        try {
+            await updateProduct(updatedProduct.barcode, updatedProduct);
+            setProducts((prevProducts) =>
+                prevProducts.map((product) =>
+                    product.barcode === updatedProduct.barcode ? updatedProduct : product
+                )
+            );
+            handleModalClose();
+        } catch (error) {
+            console.error("Error updating product:", error);
+        }
+    };
+
+    const handleDeleteClick = (product) => {
+        setSelectedProduct(product); // Set the selected product for modal display
+        setSelectedBarcode(product.barcode);
+        setIsDeleteModalOpen(true);
+    };
+
+    const handleDeleteConfirm = () => {
+        onDelete(selectedBarcode);
+        setIsDeleteModalOpen(false);
+        setSelectedProduct(null); // Clear selected product after deletion
+    };
+
+    const handleDeleteCancel = () => {
+        setIsDeleteModalOpen(false);
+        setSelectedBarcode('');
+        setSelectedProduct(null); // Clear selected product
+    };
+
     return (
         <>
             <div className='products'>
@@ -15,6 +67,8 @@ const ProductTable = ({ products, onDelete }) => {
                                 <th>Brand</th>
                                 <th>Barcode</th>
                                 <th>Category</th>
+                                <th>Type</th>
+                                <th>Size</th>
                                 <th>Price</th>
                                 <th>Stock</th>
                                 <th>Expiry Date</th>
@@ -29,11 +83,18 @@ const ProductTable = ({ products, onDelete }) => {
                                     <td>{product.brand}</td>
                                     <td>{product.barcode}</td>
                                     <td>{product.category}</td>
-                                    <td>${product.price.toFixed(2)}</td>
+                                    <td>{product.type}</td>
+                                    <td className='size'>{product.size}</td>
+                                    <td>{formatPrice(product.price.toFixed(2))}</td>
                                     <td>{product.stock}</td>
                                     <td>{formatDate(product.expiryDate)}</td>
-                                    <td>
-                                        <button onClick={() => onDelete(product.barcode)}>Delete</button>
+                                    <td className='actions'>
+                                        <button onClick={() => handleEditClick(product)} className='edit'>
+                                            <MdEdit /> Edit
+                                        </button>
+                                        <button onClick={() => handleDeleteClick(product)} className='delete'>
+                                            <MdDelete/> Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -43,6 +104,20 @@ const ProductTable = ({ products, onDelete }) => {
                     <p>No products available</p>
                 )}
             </div>
+            {selectedProduct && (
+                <EditProduct
+                    isOpen={isEditModalOpen}
+                    onClose={handleModalClose}
+                    product={selectedProduct}
+                    onSave={handleSave}
+                />
+            )}
+            <DeleteConfirmationModal
+                isOpen={isDeleteModalOpen}
+                onClose={handleDeleteCancel}
+                onDelete={handleDeleteConfirm}
+                name={selectedProduct ? selectedProduct.name : 'this product'}
+            />
         </>
     );
 };

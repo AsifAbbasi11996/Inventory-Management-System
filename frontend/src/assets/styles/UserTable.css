@@ -1,6 +1,6 @@
-.products {
+.users {
 
-    .product-table {
+    .user-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
@@ -17,7 +17,7 @@
             background-color: #f2f2f2;
         }
 
-        .size{
+        .email{
             text-transform: lowercase;
         }
 

@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import products from './routes/Product.js'
+import users from './routes/user.js'
 
 dotenv.config();
 const app = express();
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 // Routes
 app.use('/api/products', products);
+app.use('/api/user', users)
 
 app.get('/', (req, res) => {
     res.send('API is running');

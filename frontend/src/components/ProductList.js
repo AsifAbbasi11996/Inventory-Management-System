@@ -96,7 +96,7 @@ const ProductList = () => {
                     />
                 </div>
             </div>
-            <ProductTable products={filteredProducts} onDelete={handleDelete} />
+            <ProductTable products={filteredProducts} setProducts={setProducts} onDelete={handleDelete} />
         </div>
     );
 };

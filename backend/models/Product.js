@@ -7,6 +7,8 @@ const productSchema = new mongoose.Schema({
   stock: { type: Number, required: true },
   brand: { type: String, required: true },
   category: { type: String },
+  type: { type: String, enum: ['bottle', 'can'], required: true },
+  size: { type: String, required: true },
   expiryDate: { type: Date }
 }, { timestamps: true });
 

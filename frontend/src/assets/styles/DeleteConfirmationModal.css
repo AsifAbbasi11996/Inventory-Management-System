@@ -1,0 +1,86 @@
+.modal-overlay1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Ensure it appears above other elements */
+
+    .modal-content {
+        background: #fff;
+        /* White background for the modal */
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+        /* Fixed width, adjust as needed */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow */
+    }
+
+    .modal-content h2 {
+        margin: 0 0 15px;
+        /* Space below the heading */
+        font-size: 24px;
+        /* Font size for the title */
+    }
+
+    .modal-content p {
+        margin-bottom: 20px;
+        /* Space below the message */
+        font-size: 16px;
+        /* Font size for the message */
+
+        span{
+            font-weight: 550;
+        }
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: space-between;
+        /* Space buttons apart */
+    }
+
+    .modal-actions button {
+        padding: 10px 15px;
+        /* Padding for buttons */
+        border: none;
+        /* Remove default border */
+        border-radius: 4px;
+        /* Rounded corners */
+        cursor: pointer;
+        /* Pointer cursor on hover */
+        font-size: 16px;
+        /* Font size for buttons */
+        flex: 1;
+        /* Make buttons take equal space */
+        margin: 0 5px;
+        /* Space between buttons */
+    }
+
+    .modal-actions button:first-child {
+        background-color: #f44336;
+        /* Red for delete */
+        color: white;
+        /* White text */
+    }
+
+    .modal-actions button:last-child {
+        background-color: #4CAF50;
+        /* Green for cancel */
+        color: white;
+        /* White text */
+    }
+
+    .modal-actions button:hover {
+        opacity: 0.9;
+        /* Slightly fade on hover */
+    }
+
+}

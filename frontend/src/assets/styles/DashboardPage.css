@@ -10,12 +10,40 @@
         margin-bottom: 20px;
     }
 
+    .date-filter {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+            flex-grow: 1;
+            min-width: 150px; /* Ensures input boxes have a minimum width */
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #004cd0; /* Matches the product card color */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #0033a0; /* Darker shade on hover */
+            }
+        }
+    }
+
     .dashboard-cards {
         display: flex;
         justify-content: space-around;
         gap: 2rem;
         margin-bottom: 30px;
-        /* Add margin below cards */
 
         .card {
             border: none;
@@ -29,10 +57,8 @@
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            /* Lift effect on hover */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            /* Deeper shadow on hover */
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
         }
 
         .card h3 {
@@ -62,37 +88,44 @@
         .low-stock {
             background-color: #716b38;
         }
-
     }
 
-    h3+ul {
+    h3 + ul {
         list-style: none;
         margin-top: 20px;
     }
 
     ul li {
-        background-color: #f0f0f0;
-        /* Light gray background */
+        background-color: #f0f0f0; /* Light gray background */
         padding: 10px;
         border-radius: 5px;
-        margin-bottom: 10px;
-        /* Spacing between items */
-        display: flex;
-        /* Flexbox for alignment */
-        justify-content: space-between;
-        /* Space between name and value */
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-        /* Subtle shadow */
+        margin-bottom: 10px; /* Spacing between items */
+        display: flex; /* Flexbox for alignment */
+        justify-content: space-between; /* Space between name and value */
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     }
 
     ul li:last-child {
-        margin-bottom: 0;
-        /* Remove margin for the last item */
+        margin-bottom: 0; /* Remove margin for the last item */
     }
 
     h3 {
-        margin-top: 30px;
         font-size: 1.3rem;
         color: #333;
+    }
+
+    .sales_chart {
+        padding: 20px;
+        background-color: #e7dede;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+
+        h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
     }
 }

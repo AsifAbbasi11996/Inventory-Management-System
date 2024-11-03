@@ -1,8 +1,17 @@
 .order-history {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 0 auto;
     border-radius: 8px;
+    transition: box-shadow 0.5s ease-in-out;
+}
+
+.order-history:hover{
+    box-shadow: 0px 1px 10px #19191952;
 }
 
 .order-history h2 {
+    font-size: 1.2rem;
     margin-bottom: 20px;
 }
 
@@ -19,17 +28,20 @@
     text-align: left;
 }
 
+.payement_mode{
+    text-transform: capitalize;
+}
+
 .order-history th {
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white;
+    background-color: #f4f4f4;
 }
 
 .order-history tr:nth-child(even) {
-    background-color: #f2f2f2; /* Zebra striping */
+    background-color: #f0f0f0;
 }
 
 .order-history tr:hover {
-    background-color: #f1f1f1; /* Hover effect */
+    background-color: #ddd;
 }
 
 .order-history ul {

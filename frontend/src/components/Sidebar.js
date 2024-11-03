@@ -15,7 +15,7 @@ const Sidebar = () => {
         <div className="sidebar">
             <ul>
                 <li>
-                    <Link to="/dashboard" className={location.pathname === '/' ? 'active-link' : ''}>
+                    <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active-link' : ''}>
                     <MdDashboard/> Dashboard
                     </Link>
                 </li>

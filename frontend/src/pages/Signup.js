@@ -7,6 +7,7 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState('');
   const [role, setRole] = useState('');
   const [roles, setRoles] = useState([]); // State to store roles
@@ -88,13 +89,22 @@ const Signup = () => {
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'} 
               id="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <p className='show_password'>
+              <input
+                type='checkbox'
+                id="check"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <label htmlFor='check'>Show Password</label>
+            </p>
           </div>
           <div className="form-group">
             <label htmlFor="phone">Phone Number</label>

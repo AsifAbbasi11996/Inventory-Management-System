@@ -78,4 +78,24 @@
             margin-top: 10px;
         }
     }
+
+    .form-group{
+
+        .show_password{
+            display: flex;
+            align-items: center;
+            column-gap: 0.5rem;
+            margin-top: 5px;
+            margin-bottom: 0;
+
+            input{
+                width: fit-content;
+            }
+
+            label{
+                font-size: 0.8rem;
+                margin-top: 5px;
+            }
+        }
+    }
 }

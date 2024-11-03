@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts, updateProduct, deleteProduct } from '../api/productApi';
+import { getAllProducts, updateProduct, deleteProduct } from '../api/productApi';
 import { MdEdit, MdDelete } from "react-icons/md";
 import '../assets/styles/LowStockProducts.css';
 import { formatDate } from '../utils/formatDate';
@@ -18,7 +18,7 @@ const LowStockProducts = () => {
     useEffect(() => {
         const fetchLowStockProducts = async () => {
             try {
-                const products = await getProducts();
+                const products = await getAllProducts();
                 const filteredProducts = products.filter(product => product.stock < 6);
                 
                 // Sort products by stock in ascending order
@@ -95,6 +95,8 @@ const LowStockProducts = () => {
                             <th>Brand</th>
                             <th>Barcode</th>
                             <th>Category</th>
+                            <th>Type</th>
+                            <th>Size</th>
                             <th>Price</th>
                             <th>Stock</th>
                             <th>Expiry Date</th>
@@ -109,6 +111,8 @@ const LowStockProducts = () => {
                                 <td>{product.brand}</td>
                                 <td>{product.barcode}</td>
                                 <td>{product.category}</td>
+                                <td>{product.type}</td>
+                                <td className='size'>{product.size}</td>
                                 <td>{formatPrice(product.price.toFixed(2))}</td>
                                 <td>{product.stock}</td>
                                 <td>{formatDate(product.expiryDate)}</td>

@@ -73,19 +73,28 @@ const AddProductForm = () => {
                 {errors.barcode && <span className="error-message">{errors.barcode}</span>}
             </div>
 
-            <div className="form-group">
-                <input type="text" placeholder="Brand" value={brand} onChange={(e) => setBrand(e.target.value)} required />
-                {errors.brand && <span className="error-message">{errors.brand}</span>}
+            <div className='two'>
+                <div className="form-group">
+                    <input type="text" placeholder="Brand" value={brand} onChange={(e) => setBrand(e.target.value)} required />
+                    {errors.brand && <span className="error-message">{errors.brand}</span>}
+                </div>
+
+                <div className="form-group">
+                    <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required />
+                    {errors.category && <span className="error-message">{errors.category}</span>}
+                </div>
             </div>
 
-            <div className="form-group">
-                <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required />
-                {errors.category && <span className="error-message">{errors.category}</span>}
-            </div>
+            <div className='two'>
+                <div className="form-group">
+                    <input type="text" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)} required />
+                    {errors.type && <span className="error-message">{errors.type}</span>}
+                </div>
 
-            <div className="form-group">
-                <input type="text" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)} required />
-                {errors.type && <span className="error-message">{errors.type}</span>}
+                <div className="form-group">
+                    <input type="text" placeholder="Size" value={size} onChange={(e) => setSize(e.target.value)} required />
+                    {errors.size && <span className="error-message">{errors.size}</span>}
+                </div>
             </div>
 
             <div className='two'>
@@ -101,12 +110,16 @@ const AddProductForm = () => {
             </div>
 
             <div className="form-group">
-                <input type="text" placeholder="Size" value={size} onChange={(e) => setSize(e.target.value)} required />
-                {errors.size && <span className="error-message">{errors.size}</span>}
-            </div>
-
-            <div className="form-group">
-                <input type="date" placeholder="Expiry Date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} required />
+                <input
+                    type="text"
+                    id="expiryDate"
+                    placeholder="Enter expiry date"
+                    value={expiryDate}
+                    onFocus={(e) => (e.target.type = 'date')}
+                    onBlur={(e) => (e.target.type = expiryDate ? 'date' : 'text')}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    required
+                />
                 {errors.expiryDate && <span className="error-message">{errors.expiryDate}</span>}
             </div>
 

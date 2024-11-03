@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import products from './routes/Product.js'
 import users from './routes/user.js'
+import orders from './routes/orders.js'
 
 dotenv.config();
 const app = express();
@@ -19,10 +20,11 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
-app.use('/api/products', products);
-app.use('/api/user', users)
+app.use('/products', products);
+app.use('/user', users)
+app.use('/orders', orders);
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.send('API is running');
 });
 

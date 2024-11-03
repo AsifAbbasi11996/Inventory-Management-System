@@ -1,10 +1,13 @@
 import express from 'express';
-import { getProduct, addProduct, updateProduct, deleteProduct, getAllProducts } from '../controller/Product.js';
+import { getProduct, addProduct, updateProduct, deleteProduct, getAllProducts, getAllRecentProducts } from '../controller/Product.js';
 
 const router = express.Router();
 
 // Route to get all products
-router.get('/', getAllProducts); // Adjust the endpoint as needed
+router.get('/', getAllProducts);
+
+// New recent product
+router.get('/recent', getAllRecentProducts)
 
 // Route to get product by barcode
 router.get('/get/:barcode', getProduct);

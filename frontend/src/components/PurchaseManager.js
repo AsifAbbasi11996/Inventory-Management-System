@@ -1,47 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { getProducts } from '../api/productApi';
-import Scanner from './BarcodeScanner'; 
+import React, { useState } from 'react';
+import { getProduct } from '../api/productApi';
+import OrderSubmit from './OrderSubmit'; 
 import '../assets/styles/PurchaseManager.css';
 import { formatPrice } from '../utils/formatPrice';
 
 const PurchaseManager = () => {
-    const [products, setProducts] = useState([]);
     const [barcode, setBarcode] = useState('');
     const [cart, setCart] = useState([]);
+    const [paymentMethod, setPaymentMethod] = useState('cash'); 
+    const [cashAmount, setCashAmount] = useState(0);
+    const [upiAmount, setUpiAmount] = useState(0);
+    const [cardAmount, setCardAmount] = useState(0);
+    const [isSplitPayment, setIsSplitPayment] = useState(false);
+    const [orderSubmitted, setOrderSubmitted] = useState(false);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await getProducts();
-                setProducts(response);
-            } catch (error) {
-                console.error("Failed to fetch products:", error);
+    const handleAddToCart = async () => {
+        try {
+            const product = await getProduct(barcode);
+            if (product) {
+                setCart(prevCart => {
+                    const existingItem = prevCart.find(item => item.barcode === barcode);
+                    let updatedCart;
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                        updatedCart = [...prevCart];
+                    } else {
+                        updatedCart = [...prevCart, { ...product, quantity: 1 }];
+                    }
+                    return updatedCart;
+                });
+                setBarcode('');
+            } else {
+                alert("Product not found!");
             }
-        };
-        fetchProducts();
-    }, []);
-
-    const handleAddToCart = () => {
-        const product = products.find(p => p.barcode === barcode);
-        if (product) {
-            setCart(prevCart => {
-                const existingItem = prevCart.find(item => item.barcode === barcode);
-                if (existingItem) {
-                    existingItem.quantity += 1; // Increment existing item's quantity
-                    return [...prevCart];
-                } else {
-                    return [...prevCart, { ...product, quantity: 1 }]; // Add new item to cart
-                }
-            });
-            setBarcode('');
-        } else {
-            alert("Product not found!");
+        } catch (error) {
+            console.error("Failed to add product:", error);
         }
-    };
-
-    const handleScan = (scannedBarcode) => {
-        setBarcode(scannedBarcode);
-        handleAddToCart(); // Automatically add to cart on scan
     };
 
     const handleRemoveFromCart = (barcode) => {
@@ -52,20 +46,41 @@ const PurchaseManager = () => {
         setCart(cart.map(item => {
             if (item.barcode === barcode) {
                 const newQuantity = item.quantity + delta;
-                return { ...item, quantity: newQuantity > 0 ? newQuantity : 1 }; // Ensure quantity doesn't go below 1
+                return { ...item, quantity: newQuantity > 0 ? newQuantity : 1 };
             }
             return item;
         }));
     };
 
     const calculateTotalPrice = () => {
-        return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
     };
+
+    const calculateTotalQuantity = () => {
+        return cart.reduce((total, item) => total + item.quantity, 0);
+    };
+
+    const handlePaymentMethodChange = (method) => {
+        setPaymentMethod(method);
+        setIsSplitPayment(method === 'split');
+    };
+
+    const handleOrderSubmit = () => {
+        const totalSplitAmount = cashAmount + upiAmount + cardAmount;
+        const totalPrice = calculateTotalPrice();
+        if (isSplitPayment && totalSplitAmount !== totalPrice) {
+            alert("Total of cash, UPI, and card amounts must match the total price.");
+            return;
+        }
+        setOrderSubmitted(true); // Set to true once order is submitted
+    };
+
+    const totalPrice = calculateTotalPrice();
+    const totalQuantity = calculateTotalQuantity();
 
     return (
         <div className="purchase-manager">
             <h2>Purchase Manager</h2>
-            <Scanner onScan={handleScan} /> 
             <div className="input-container">
                 <input
                     type="text"
@@ -119,8 +134,84 @@ const PurchaseManager = () => {
                 ) : (
                     <p>No items in the cart.</p>
                 )}
-                <h4>Total Price: {formatPrice(calculateTotalPrice())}</h4>
-                <button className="payment-button">Proceed to Payment</button>
+                <h4>Total Quantity: {totalQuantity}</h4>
+                <h4 className='total_price'>Total Price: {formatPrice(totalPrice)}</h4>
+                <div className="payment-method">
+                    <h4>Select Payment Method :</h4>
+                    <div className='method'>
+                        <label htmlFor='cash'>
+                            <input
+                                type="radio"
+                                value="cash"
+                                id='cash'
+                                checked={paymentMethod === 'cash'}
+                                onChange={() => handlePaymentMethodChange('cash')}
+                            />
+                            Cash
+                        </label>
+                    </div>
+                    <div className='method'>
+                        <label htmlFor='upi'>
+                            <input
+                                type="radio"
+                                value="upi"
+                                id='upi'
+                                checked={paymentMethod === 'upi'}
+                                onChange={() => handlePaymentMethodChange('upi')}
+                            />
+                            UPI
+                        </label>
+                    </div>
+                    <div className='method'>
+                        <label htmlFor='card'>
+                            <input
+                                type="radio"
+                                value="card"
+                                id='card'
+                                checked={paymentMethod === 'card'}
+                                onChange={() => handlePaymentMethodChange('card')}
+                            />
+                            Card
+                        </label>
+                    </div>
+                    <div className='method'>
+                        <label htmlFor='split'>
+                            <input
+                                type="radio"
+                                value="split"
+                                id='split'
+                                checked={paymentMethod === 'split'}
+                                onChange={() => handlePaymentMethodChange('split')}
+                            />
+                            Split Payment
+                        </label>
+                    </div>
+
+                    {isSplitPayment && (
+                        <div>
+                            <label>Cash Amount: </label>
+                            <input type="number" value={cashAmount} onChange={(e) => setCashAmount(Number(e.target.value))} />
+                            <label>UPI Amount: </label>
+                            <input type="number" value={upiAmount} onChange={(e) => setUpiAmount(Number(e.target.value))} />
+                            <label>Card Amount: </label>
+                            <input type="number" value={cardAmount} onChange={(e) => setCardAmount(Number(e.target.value))} />
+                        </div>
+                    )}
+                </div>
+                
+                <button onClick={handleOrderSubmit}>Submit Order</button>
+                
+                <OrderSubmit
+                    cart={cart} 
+                    paymentMethod={paymentMethod} 
+                    totalPrice={totalPrice}
+                    totalQuantity={totalQuantity}
+                    cashAmount={cashAmount}
+                    upiAmount={upiAmount}
+                    cardAmount={cardAmount}
+                    setCart={setCart} 
+                    orderSubmitted={orderSubmitted}
+                />
             </div>
         </div>
     );

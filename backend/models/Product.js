@@ -9,7 +9,8 @@ const productSchema = new mongoose.Schema({
   category: { type: String },
   type: { type: String, enum: ['bottle', 'can'], required: true },
   size: { type: String, required: true },
-  expiryDate: { type: Date }
+  expiryDate: { type: Date },
+  orderCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
 const Product = mongoose.model('Product', productSchema);

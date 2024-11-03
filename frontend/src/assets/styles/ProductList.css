@@ -1,6 +1,12 @@
 .product-list_container {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 8px;
+    transition: box-shadow 0.5s ease-in-out;
 
-    h2{
+    h2 {
+        font-size: 1.2rem;
         margin-bottom: 20px;
     }
 
@@ -41,9 +47,13 @@
                 outline: none;
             }
 
-            option{
+            option {
                 font-size: 1rem;
             }
         }
     }
+}
+
+.product-list_container:hover {
+    box-shadow: 0px 1px 10px #19191952;
 }

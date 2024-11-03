@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from '../api/userApi.js'; 
+import { loginUser } from '../api/userApi.js';
 import '../assets/styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -13,7 +14,7 @@ const Login = () => {
 
     try {
       const response = await loginUser({ email, password });
-      
+
       console.log("Login successful:", response); // Log the user data to the console
 
       // Store the token and user data in local storage or state management (optional)
@@ -50,13 +51,22 @@ const Login = () => {
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'} 
               id="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <p className='show_password'>
+              <input
+                type='checkbox'
+                id="check"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <label htmlFor='check'>Show Password</label>
+            </p>
           </div>
           <button type="submit" className="login-button">Login</button>
         </form>

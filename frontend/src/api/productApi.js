@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/products'; 
+const API_URL = 'http://localhost:5000/products'; 
 
 // Fetch all products
-export const getProducts = async () => {
+export const getAllProducts = async () => {
     const response = await axios.get(API_URL);
     return response.data;
 };
@@ -31,3 +31,10 @@ export const getProduct = async (barcode) => {
     const response = await axios.get(`${API_URL}/get/${barcode}`);
     return response.data;
 };
+
+
+// Get recent product 
+export const getAllRecentProducts = async () => {
+    const response = await axios.get(`${API_URL}/recent`);
+    return response.data
+}

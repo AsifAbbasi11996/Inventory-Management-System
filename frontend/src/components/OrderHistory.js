@@ -1,69 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../assets/styles/OrderHistory.css';
 import { formatPrice } from '../utils/formatPrice';
 import { formatDate } from '../utils/formatDate';
-
-const sampleOrders = [
-    {
-        id: 'ORD001',
-        date: '2024-10-30',
-        items: [
-            { name: 'Product A', quantity: 2 },
-            { name: 'Product B', quantity: 1 },
-        ],
-        totalPrice: 25.99,
-        status: 'Completed',
-    },
-    {
-        id: 'ORD002',
-        date: '2024-10-25',
-        items: [
-            { name: 'Product C', quantity: 1 },
-            { name: 'Product D', quantity: 3 },
-        ],
-        totalPrice: 45.50,
-        status: 'Pending',
-    },
-    {
-        id: 'ORD003',
-        date: '2024-10-15',
-        items: [
-            { name: 'Product E', quantity: 5 },
-        ],
-        totalPrice: 75.00,
-        status: 'Shipped',
-    },
-];
+import { getAllOrders } from '../api/orderApi'; // Import your API function
 
 const OrderHistory = () => {
+    const [orders, setOrders] = useState([]); // State to hold the fetched orders
+    const [loading, setLoading] = useState(true); // State to manage loading state
+    const [error, setError] = useState(null); // State to manage error state
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const response = await getAllOrders();
+                if (response.success) {
+                    setOrders(response.orders); // Set the fetched orders to state
+                } else {
+                    throw new Error('Failed to fetch orders');
+                }
+            } catch (error) {
+                setError('Failed to fetch orders.'); // Handle errors
+            } finally {
+                setLoading(false); // Stop loading regardless of success or failure
+            }
+        };
+
+        fetchOrders(); // Call the fetch function
+    }, []); // Empty dependency array to run on component mount
+
+    if (loading) {
+        return <p>Loading...</p>; // Loading state
+    }
+
+    if (error) {
+        return <p>{error}</p>; // Error state
+    }
+
     return (
         <div className="order-history">
             <h2>Order History</h2>
-            {sampleOrders.length > 0 ? (
+            {orders.length > 0 ? (
                 <table>
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Date</th>
+                            <th>Sr. No</th>
                             <th>Items</th>
                             <th>Total Price</th>
-                            <th>Status</th>
+                            <th>Total Quantity</th>
+                            <th>Payment Mode</th>
+                            <th>Sold date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {sampleOrders.map(order => (
-                            <tr key={order.id}>
-                                <td>{order.id}</td>
-                                <td>{formatDate(order.date)}</td>
+                        {orders.map((order, index) => (
+                            <tr key={order._id}>
+                                <td>{index + 1}</td>
                                 <td>
                                     <ul>
-                                        {order.items.map(item => (
-                                            <li key={item.name}>{item.name} (x{item.quantity})</li>
+                                        {order.productname.map((name, index) => (
+                                            <li key={order.productbarcode[index]}>
+                                                {name} (x{order.productquantity[index]}) - {formatPrice(order.productprice[index])}
+                                            </li>
                                         ))}
                                     </ul>
                                 </td>
                                 <td>{formatPrice(order.totalPrice)}</td>
-                                <td>{order.status}</td>
+                                <td>{order.totalQuantity}</td>
+                                <td className='payement_mode'>{order.paymentmode}</td>
+                                <td>{formatDate(order.orderdate)}</td>
                             </tr>
                         ))}
                     </tbody>

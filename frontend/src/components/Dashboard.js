@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts } from '../api/productApi';
+import { getAllProducts } from '../api/productApi';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { formatPrice } from '../utils/formatPrice';
@@ -19,7 +19,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const products = await getProducts();
+            const products = await getAllProducts();
             setTotalProducts(products.length);
             const categories = new Set(products.map(product => product.category));
             setTotalCategories(categories.size);

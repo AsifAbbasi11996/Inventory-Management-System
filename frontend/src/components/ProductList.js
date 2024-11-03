@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts, deleteProduct } from '../api/productApi';
+import { getAllProducts, deleteProduct } from '../api/productApi';
 import ProductTable from './ProductTable';
 import '../assets/styles/ProductList.css'
 
@@ -13,7 +13,7 @@ const ProductList = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await getProducts();
+                const response = await getAllProducts();
                 setProducts(response);
                 setFilteredProducts(response); // Initialize filtered products
             } catch (error) {
@@ -66,7 +66,7 @@ const ProductList = () => {
 
     return (
         <div className='product-list_container'>
-            <h2>Product List</h2>
+            <h2>Products List</h2>
             <div className='filters'>
                 <div className='rows'>
                     <label>Items by rows</label>

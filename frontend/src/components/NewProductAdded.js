@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllRecentProducts } from '../api/productApi';
 import '../assets/styles/AddProductForm.css'
-import { formatPrice } from '../utils/formatPrice';
-import { formatDate } from '../utils/formatDate';
+import { formatPrice } from '../utils/formatPrice.js';
 
 const NewProductAdded = () => {
     const [products, setProducts] = useState([]);
@@ -33,7 +32,6 @@ const NewProductAdded = () => {
                         <th>Type</th>
                         <th>Price</th>
                         <th>Stock</th>
-                        <th>Expiry Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +45,6 @@ const NewProductAdded = () => {
                                 <td>{product.type}</td>
                                 <td>{formatPrice(product.price.toFixed(2))}</td>
                                 <td>{product.stock}</td>
-                                <td>{formatDate(product.expiryDate)}</td>
                             </tr>
                         ))
                     ) : (

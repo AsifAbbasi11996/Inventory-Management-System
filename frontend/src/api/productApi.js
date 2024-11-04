@@ -38,3 +38,21 @@ export const getAllRecentProducts = async () => {
     const response = await axios.get(`${API_URL}/recent`);
     return response.data
 }
+
+// Get total order count product 
+export const getTotalOrderCount = async () => {
+    const response = await axios.get(`${API_URL}/count`);
+    return response.data
+}
+
+// Get total sales product 
+export const getTotalSales = async () => {
+    const response = await axios.get(`${API_URL}/sales`);
+    return response.data
+}
+
+// Get total products 
+export const getTotalProducts = async () => {
+    const response = await axios.get(`${API_URL}/totalproducts`);
+    return response.data
+}

@@ -1,11 +1,13 @@
 .dashboard-page {
-    display: flex;
-    min-height: 100vh;
     background-color: #ffffff;
     padding: 20px;
     margin: 0 auto;
     border-radius: 8px;
     transition: box-shadow 0.5s ease-in-out;
+
+    hr{
+        margin: 30px 20px;
+    }
 }
 
 .dashboard-page:hover {
@@ -50,8 +52,8 @@
     }
 
     .dashboard-cards {
-        display: flex;
-        justify-content: space-around;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
         margin-bottom: 30px;
 
@@ -61,7 +63,6 @@
             padding: 20px;
             text-align: center;
             color: #fff;
-            flex: 1;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
         }
@@ -84,7 +85,7 @@
         }
 
         .products {
-            background-color: #004cd0;
+            background-color: #023b9c;
         }
 
         .categories {
@@ -97,6 +98,10 @@
 
         .low-stock {
             background-color: #716b38;
+        }
+
+        .order-count{
+            background-color: #ca4747;
         }
     }
 
@@ -120,8 +125,7 @@
     }
 
     h3 {
-        font-size: 1.3rem;
-        color: #333;
+        font-size: 1.2rem;
     }
 
     .sales_chart {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/ProductTable.css';
 import { MdEdit, MdDelete } from "react-icons/md";
-import { formatDate } from '../utils/formatDate';
 import { formatPrice } from '../utils/formatPrice.js';
 import { updateProduct } from '../api/productApi.js';
 import EditProduct from './EditProduct';
@@ -87,7 +86,6 @@ const ProductTable = ({ products, onDelete, setProducts }) => {
                                     <td className='size'>{product.size}</td>
                                     <td>{formatPrice(product.price.toFixed(2))}</td>
                                     <td>{product.stock}</td>
-                                    <td>{formatDate(product.expiryDate)}</td>
                                     <td className='actions'>
                                         <button onClick={() => handleEditClick(product)} className='edit'>
                                             <MdEdit /> Edit

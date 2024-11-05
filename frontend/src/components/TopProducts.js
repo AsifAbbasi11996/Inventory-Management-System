@@ -61,7 +61,7 @@ const TopProducts = () => {
 
     return (
         <div className="top-products-container">
-            <h2 className="title">Top Orders</h2>
+            <h2 className="title">Best Selling Products</h2>
 
             <div className="filters">
                 <div className="rows">

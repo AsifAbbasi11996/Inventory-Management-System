@@ -13,20 +13,24 @@ const OrderHistory = () => {
         const fetchOrders = async () => {
             try {
                 const response = await getAllOrders();
-                if (response.success) {
-                    setOrders(response.orders); // Set the fetched orders to state
+                console.log(response); // Log response to inspect structure
+                
+                if (response) { // Adjusted condition based on your API response
+                    setOrders(response);
                 } else {
                     throw new Error('Failed to fetch orders');
                 }
             } catch (error) {
-                setError('Failed to fetch orders.'); // Handle errors
+                console.error(error); // Log error for debugging
+                setError('Failed to fetch orders.');
             } finally {
-                setLoading(false); // Stop loading regardless of success or failure
+                setLoading(false);
             }
         };
-
-        fetchOrders(); // Call the fetch function
-    }, []); // Empty dependency array to run on component mount
+    
+        fetchOrders();
+    }, []);
+    
 
     if (loading) {
         return <p>Loading...</p>; // Loading state
@@ -48,7 +52,7 @@ const OrderHistory = () => {
                             <th>Total Price</th>
                             <th>Total Quantity</th>
                             <th>Payment Mode</th>
-                            <th>Sold date</th>
+                            <th>Sold Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,16 +61,16 @@ const OrderHistory = () => {
                                 <td>{index + 1}</td>
                                 <td>
                                     <ul>
-                                        {order.productname.map((name, index) => (
-                                            <li key={order.productbarcode[index]}>
-                                                {name} (x{order.productquantity[index]}) - {formatPrice(order.productprice[index])}
+                                        {order.productname.map((name, i) => (
+                                            <li key={order.productbarcode[i]}>
+                                                {name} - (x{order.productquantity[i]}) - {formatPrice(order.productprice[i])}
                                             </li>
                                         ))}
                                     </ul>
                                 </td>
                                 <td>{formatPrice(order.totalPrice)}</td>
                                 <td>{order.totalQuantity}</td>
-                                <td className='payement_mode'>{order.paymentmode}</td>
+                                <td className='payment_mode'>{order.paymentmode}</td>
                                 <td>{formatDate(order.orderdate)}</td>
                             </tr>
                         ))}

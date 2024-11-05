@@ -25,6 +25,7 @@ const NewProductAdded = () => {
             <table>
                 <thead>
                     <tr>
+                        <th>Sr. no</th>
                         <th>Name</th>
                         <th>Barcode</th>
                         <th>Brand</th>
@@ -36,8 +37,9 @@ const NewProductAdded = () => {
                 </thead>
                 <tbody>
                     {products.length > 0 ? (
-                        products.map(product => (
+                        products.map((product, index) => (
                             <tr key={product._id}>
+                                <td>{index + 1}</td>
                                 <td>{product.name}</td>
                                 <td>{product.barcode}</td>
                                 <td>{product.brand}</td>

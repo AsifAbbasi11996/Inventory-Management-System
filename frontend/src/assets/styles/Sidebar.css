@@ -9,6 +9,31 @@
 
     }
 
+    li {
+        .dropdown {
+
+            .arrow-icon {
+                transition: transform 0.3s ease;
+                font-size: 1.5rem;
+
+            }
+
+            .arrow-icon.rotate {
+                transform: rotate(90deg);
+            }
+        }
+
+        .dropdown-menu {
+
+            li {
+
+                a {
+                    padding-left: 40px;
+                }
+            }
+        }
+    }
+
     a {
         display: flex;
         align-items: center;
@@ -17,7 +42,7 @@
         text-decoration: none;
         color: #fff;
 
-        svg{
+        svg {
             font-size: 20px;
             font-weight: normal;
         }
@@ -27,7 +52,7 @@
         background-color: #4e2c5d;
     }
 
-    .active-link{
+    .active-link {
         background-color: #4e2c5d;
     }
 }

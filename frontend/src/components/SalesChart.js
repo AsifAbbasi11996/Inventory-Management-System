@@ -14,13 +14,26 @@ const SalesChart = ({ salesData }) => {
         datasets: [{
             label: 'Total Sales ($)',
             data: topSalesData.map(product => product.totalSales),
-            fill: false,
-            borderColor: 'rgba(54, 162, 235, 0.8)',
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderWidth: 2,
-            pointRadius: 4,
+            fill: true,
+            backgroundColor: (context) => {
+                const chart = context.chart;
+                const { ctx, chartArea } = chart;
+                if (!chartArea) {
+                    // This case happens on initial chart render.
+                    return null;
+                }
+                const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                gradient.addColorStop(0, 'rgba(54, 162, 235, 0.2)');
+                gradient.addColorStop(1, 'rgba(54, 162, 235, 0.7)');
+                return gradient;
+            },
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 3,
+            pointRadius: 6,
             pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-            tension: 0.4, // Smooth the line
+            pointBorderColor: '#fff',
+            pointHoverRadius: 8,
+            tension: 0.5, // Smooth the line further
         }],
     };
 
@@ -47,6 +60,10 @@ const SalesChart = ({ salesData }) => {
                         size: 14,
                         weight: 'bold',
                     },
+                    padding: {
+                        top: 10,
+                        bottom: 10,
+                    },
                 },
             },
             x: {
@@ -67,6 +84,9 @@ const SalesChart = ({ salesData }) => {
                         size: 14,
                         weight: 'bold',
                     },
+                    padding: {
+                        top: 10,
+                    },
                 },
             },
         },
@@ -74,22 +94,40 @@ const SalesChart = ({ salesData }) => {
             legend: {
                 display: true,
                 position: 'top',
+                labels: {
+                    color: '#333',
+                    font: {
+                        size: 14,
+                    },
+                },
             },
             tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 titleColor: '#fff',
                 titleFont: { size: 14 },
                 bodyFont: { size: 12 },
-                padding: 10,
-                cornerRadius: 8,
+                padding: 12,
+                cornerRadius: 10,
+                displayColors: false,
+            },
+        },
+        animation: {
+            duration: 1000,
+            easing: 'easeInOutQuart',
+        },
+        elements: {
+            line: {
+                borderWidth: 2,
+                borderColor: 'rgba(54, 162, 235, 0.8)',
+                borderDash: [5, 5],
             },
         },
     };
 
     return (
         <div className="sales_chart">
-            <h3>Sales Chart</h3>
-            <div style={{ minHeight: '400px' }}>
+            <h3 style={{ color: '#333', textAlign: 'center', marginBottom: '20px' }}>Sales Chart</h3>
+            <div style={{ minHeight: '400px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '8px', padding: '20px', backgroundColor: '#f9f9f9' }}>
                 <Line data={chartData} options={chartOptions} />
             </div>
         </div>

@@ -11,7 +11,9 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import AllOrders from './components/AllOrders';
 import OrderHistory from './components/OrderHistory';
+import FilteredOrders from './components/FilteredOrders';
 import Reports from './components/Reports';
 import UserList from './components/UserList';
 import AddProductFormpage from './pages/AddProductFormpage';
@@ -33,7 +35,9 @@ const App = () => {
                     <Route path="/lowstockproducts" element={<LowStockProducts />} />
                     <Route path="/scan" element={<Scanner />} />
                     <Route path="/billing" element={<PurchaseManager />} />
+                    <Route path="/orders" element={<AllOrders />} />
                     <Route path="/orderhistory" element={<OrderHistory />} />
+                    <Route path="/filtered-orders/:filter" element={<FilteredOrders />} />
                     <Route path="/reports" element={<Reports />} />
                 </Route>
             </Routes>

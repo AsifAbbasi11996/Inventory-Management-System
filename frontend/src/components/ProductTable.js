@@ -68,9 +68,9 @@ const ProductTable = ({ products, onDelete, setProducts }) => {
                                 <th>Category</th>
                                 <th>Type</th>
                                 <th>Size</th>
-                                <th>Price</th>
+                                <th>MRP</th>
+                                <th>SP</th>
                                 <th>Stock</th>
-                                <th>Expiry Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -84,6 +84,7 @@ const ProductTable = ({ products, onDelete, setProducts }) => {
                                     <td>{product.category}</td>
                                     <td>{product.type}</td>
                                     <td className='size'>{product.size}</td>
+                                    <td>{formatPrice(product.mrp.toFixed(2))}</td>
                                     <td>{formatPrice(product.price.toFixed(2))}</td>
                                     <td>{product.stock}</td>
                                     <td className='actions'>

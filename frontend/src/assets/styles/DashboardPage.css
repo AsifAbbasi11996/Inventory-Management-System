@@ -57,7 +57,9 @@
         gap: 2rem;
         margin-bottom: 30px;
 
-        .card {
+        .grid {
+            display: flex;
+            justify-content: center;
             border: none;
             border-radius: 8px;
             padding: 20px;
@@ -65,11 +67,17 @@
             color: #fff;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            position: relative;
+
+            .filter{
+                position: absolute;
+                right: 30px;
+            }
         }
 
-        .card:hover {
+        .grid:hover {
             transform: translateY(-5px); /* Lift effect on hover */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8); /* Deeper shadow on hover */
         }
 
         .card h3 {
@@ -85,24 +93,25 @@
         }
 
         .products {
-            background-color: #023b9c;
+            background: linear-gradient(135deg, #013184 0%, #4784ba 100%);
         }
-
+        
         .categories {
-            background-color: #ff8c00;
+            background: linear-gradient(135deg, #ff7b00 0%, #e7c89b 100%);
         }
-
+        
         .sales {
-            background-color: #6f42c1;
+            background: linear-gradient(135deg, #6e46b9 0%, #a572c1 100%);
         }
-
+        
         .low-stock {
-            background-color: #716b38;
+            background: linear-gradient(135deg, #715738 0%, #bdab7c 100%);
         }
-
-        .order-count{
-            background-color: #ca4747;
+        
+        .order-count {
+            background: linear-gradient(135deg, #a42f2f 0%, #e38d8d 100%);
         }
+        
     }
 
     h3 + ul {

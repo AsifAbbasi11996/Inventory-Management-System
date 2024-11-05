@@ -20,6 +20,8 @@
         border: 1px solid #ccc;
         padding: 10px;
         text-align: left;
+        text-transform: capitalize;
+        font-size: 0.9rem;
     }
 
     .low-stock-table th {

@@ -1,5 +1,6 @@
 import Order from '../models/orders.js';
 import Product from '../models/Product.js';
+import moment from 'moment'
 
 // Create Order
 const createOrder = async (req, res) => {
@@ -48,10 +49,6 @@ const createOrder = async (req, res) => {
             const newStock = product.stock - quantityOrdered;
             const newOrderCount = product.orderCount + quantityOrdered;
 
-            // Log updates for debugging
-            console.log(`Updating Product: ${product.name}`);
-            console.log(`Ordered: ${quantityOrdered}, New Stock: ${newStock}, New Order Count: ${newOrderCount}`);
-
             // Return the update operation
             return Product.findByIdAndUpdate(
                 product._id,
@@ -85,12 +82,11 @@ const createOrder = async (req, res) => {
     }
 };
 
-
 // Get All Orders
 const getAllOrders = async (req, res) => {
     try {
         const orders = await Order.find().sort({ currentTimeStamp: -1 });
-        res.status(200).json({ success: true, orders });
+        res.json(orders);
     } catch (error) {
         console.error("Error fetching orders:", error);
         res.status(500).json({ message: error.message });
@@ -139,10 +135,137 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+// Fetch orders created today
+const getTotalOrdersToday = async (req, res) => {
+    try {
+        const startOfDay = moment().startOf('day').toDate();
+        const endOfDay = moment().endOf('day').toDate();
+
+        const orders = await Order.find({
+            currentTimeStamp: {
+                $gte: startOfDay,
+                $lte: endOfDay,
+            },
+        }).sort({ currentTimeStamp: -1 });
+
+        res.status(200).json({ count: orders.length, orders });
+    } catch (error) {
+        console.error("Error fetching users for today:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// Fetch orders created yesterday
+const getTotalOrdersYesterday = async (req, res) => {
+    try {
+        const startOfDay = moment().subtract(1, 'days').startOf('day').toDate();
+        const endOfDay = moment().subtract(1, 'days').endOf('day').toDate();
+
+        const orders = await Order.find({
+            currentTimeStamp: {
+                $gte: startOfDay,
+                $lte: endOfDay,
+            },
+        }).sort({ currentTimeStamp: -1 });
+
+        res.status(200).json({ count: orders.length, orders });
+    } catch (error) {
+        console.error("Error fetching orders for yesterday:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// Fetch orders created in the last week
+const getTotalOrdersLastWeek = async (req, res) => {
+    try {
+        const startOfWeek = moment().subtract(1, 'weeks').startOf('week').toDate();
+        const endOfWeek = moment().endOf('week').toDate();
+
+        const orders = await Order.find({
+            currentTimeStamp: {
+                $gte: startOfWeek,
+                $lte: endOfWeek,
+            },
+        }).sort({ currentTimeStamp: -1 });
+
+        res.status(200).json({ count: orders.length, orders });
+    } catch (error) {
+        console.error("Error fetching orders for last week:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// Fetch orders created in the last month
+const getTotalOrdersLastMonth = async (req, res) => {
+    try {
+        const startOfMonth = moment().subtract(1, 'months').startOf('month').toDate();
+        const endOfMonth = moment().endOf('month').toDate();
+
+        const orders = await Order.find({
+            currentTimeStamp: {
+                $gte: startOfMonth,
+                $lte: endOfMonth,
+            },
+        }).sort({ currentTimeStamp: -1 });
+
+        res.status(200).json({ count: orders.length, orders });
+    } catch (error) {
+        console.error("Error fetching orders for last month:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// Fetch orders created in the last year
+const getTotalOrdersLastYear = async (req, res) => {
+    try {
+        const startOfYear = moment().subtract(1, 'years').startOf('year').toDate();
+        const endOfYear = moment().endOf('year').toDate();
+
+        const orders = await Order.find({
+            currentTimeStamp: {
+                $gte: startOfYear,
+                $lte: endOfYear,
+            },
+        }).sort({ currentTimeStamp: -1 });
+
+        res.status(200).json({ count: orders.length, orders });
+    } catch (error) {
+        console.error("Error fetching orders for last year:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// Fetch orders for a specific date
+const getTotalOrdersByDate = async (req, res) => {
+    const { date } = req.params; // Assume the date is passed in the URL, e.g., /orders/date/2024-01-01
+    try {
+        const startOfDate = moment(date).startOf('day').toDate();
+        const endOfDate = moment(date).endOf('day').toDate();
+
+        const orders = await Order.find({
+            currentTimeStamp: {
+                $gte: startOfDate,
+                $lte: endOfDate,
+            },
+        }).sort({ currentTimeStamp: -1 });
+
+        res.status(200).json({ count: orders.length, orders });
+    } catch (error) {
+        console.error("Error fetching orders for the specific date:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
 export {
     createOrder,
     getAllOrders,
     getOrderById,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    getTotalOrdersToday,
+    getTotalOrdersYesterday,
+    getTotalOrdersLastWeek,
+    getTotalOrdersLastMonth,
+    getTotalOrdersLastYear,
+    getTotalOrdersByDate,
 };

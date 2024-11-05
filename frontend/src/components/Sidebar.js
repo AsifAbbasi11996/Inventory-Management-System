@@ -1,27 +1,30 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import '../assets/styles/Sidebar.css';
-import { MdDashboard, MdAddBox, MdAccountCircle  } from "react-icons/md";
-import { FaList } from "react-icons/fa6";
+import { MdDashboard, MdAddBox, MdAccountCircle, MdArrowRight } from "react-icons/md";
+import { FaList, FaBoxOpen } from "react-icons/fa6";
 import { BiSolidPurchaseTag } from "react-icons/bi";
-import { FaInbox } from "react-icons/fa";
+import { FaInbox, FaBoxes } from "react-icons/fa";
 import { VscTasklist } from "react-icons/vsc";
 import { TbReportSearch } from "react-icons/tb";
 
 const Sidebar = () => {
-    const location = useLocation(); // Get current location
+    const location = useLocation();
+    const [isOrdersOpen, setIsOrdersOpen] = useState(false); // Dropdown state
+
+    const toggleOrdersDropdown = () => setIsOrdersOpen(!isOrdersOpen); // Toggle function
 
     return (
         <div className="sidebar">
             <ul>
                 <li>
                     <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active-link' : ''}>
-                    <MdDashboard/> Dashboard
+                        <MdDashboard /> Dashboard
                     </Link>
                 </li>
                 <li>
                     <Link to="/userlist" className={location.pathname === '/userlist' ? 'active-link' : ''}>
-                    <MdAccountCircle/> Users
+                        <MdAccountCircle /> Users
                     </Link>
                 </li>
                 <li>
@@ -45,9 +48,26 @@ const Sidebar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/orderhistory" className={location.pathname === '/orderhistory' ? 'active-link' : ''}>
-                        <VscTasklist /> Order History
-                    </Link>
+                    <div className="dropdown" onClick={toggleOrdersDropdown}>
+                        <Link to="#" className={location.pathname.startsWith('/order') ? 'active-link' : ''}>
+                            <FaBoxOpen /> Orders
+                            <MdArrowRight className={`arrow-icon ${isOrdersOpen ? 'rotate' : ''}`} />
+                        </Link>
+                    </div>
+                    {isOrdersOpen && (
+                        <ul className="dropdown-menu">
+                            <li>
+                                <Link to="/orders" className={location.pathname === '/orders' ? 'active-link' : ''}>
+                                    <FaBoxes /> All Orders
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/orderhistory" className={location.pathname === '/orderhistory' ? 'active-link' : ''}>
+                                    <VscTasklist /> Order History
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
                 </li>
                 <li>
                     <Link to="/reports" className={location.pathname === '/reports' ? 'active-link' : ''}>

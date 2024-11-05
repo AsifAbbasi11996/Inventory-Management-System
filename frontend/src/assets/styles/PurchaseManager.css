@@ -106,16 +106,12 @@
         .method {
             margin: 10px 0;
 
-            .label {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                column-gap: 0.5rem;
-                border: 1px solid #ccc;
-                padding: 5px 0 5px 15px;
-                border-radius: 4px;
-                width: 100px;
+           label {
+
+            input{
+                margin-right: 10px;
             }
+           }
         }
     }
 }

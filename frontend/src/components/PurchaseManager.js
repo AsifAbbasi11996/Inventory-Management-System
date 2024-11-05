@@ -7,11 +7,7 @@ import { formatPrice } from '../utils/formatPrice';
 const PurchaseManager = () => {
     const [barcode, setBarcode] = useState('');
     const [cart, setCart] = useState([]);
-    const [paymentMethod, setPaymentMethod] = useState('cash'); 
-    const [cashAmount, setCashAmount] = useState(0);
-    const [upiAmount, setUpiAmount] = useState(0);
-    const [cardAmount, setCardAmount] = useState(0);
-    const [isSplitPayment, setIsSplitPayment] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState('cash');
     const [orderSubmitted, setOrderSubmitted] = useState(false);
 
     const handleAddToCart = async () => {
@@ -62,16 +58,9 @@ const PurchaseManager = () => {
 
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method);
-        setIsSplitPayment(method === 'split');
     };
 
     const handleOrderSubmit = () => {
-        const totalSplitAmount = cashAmount + upiAmount + cardAmount;
-        const totalPrice = calculateTotalPrice();
-        if (isSplitPayment && totalSplitAmount !== totalPrice) {
-            alert("Total of cash, UPI, and card amounts must match the total price.");
-            return;
-        }
         setOrderSubmitted(true); // Set to true once order is submitted
     };
 
@@ -186,17 +175,6 @@ const PurchaseManager = () => {
                             Split Payment
                         </label>
                     </div>
-
-                    {isSplitPayment && (
-                        <div>
-                            <label>Cash Amount: </label>
-                            <input type="number" value={cashAmount} onChange={(e) => setCashAmount(Number(e.target.value))} />
-                            <label>UPI Amount: </label>
-                            <input type="number" value={upiAmount} onChange={(e) => setUpiAmount(Number(e.target.value))} />
-                            <label>Card Amount: </label>
-                            <input type="number" value={cardAmount} onChange={(e) => setCardAmount(Number(e.target.value))} />
-                        </div>
-                    )}
                 </div>
                 
                 <button onClick={handleOrderSubmit}>Submit Order</button>
@@ -206,9 +184,6 @@ const PurchaseManager = () => {
                     paymentMethod={paymentMethod} 
                     totalPrice={totalPrice}
                     totalQuantity={totalQuantity}
-                    cashAmount={cashAmount}
-                    upiAmount={upiAmount}
-                    cardAmount={cardAmount}
                     setCart={setCart} 
                     orderSubmitted={orderSubmitted}
                 />

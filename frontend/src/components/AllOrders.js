@@ -45,14 +45,14 @@ const AllOrders = () => {
                     <tr>
                         <th>Sr. no</th>
                         <th>Product Name</th>
-                        <th>Barcode</th>
+                        {/* <th>Barcode</th> */}
                         <th>Brand</th>
                         <th>Type</th>
                         <th>Size</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Payment Mode</th>
-                        <th>Total Price</th>
+                        {/* <th>Total Price</th> */}
                         <th>Order Date</th>
                     </tr>
                 </thead>
@@ -63,14 +63,14 @@ const AllOrders = () => {
                             ...order.productname.map((name, index) => ({
                                 srNo: acc.length + index + 1,
                                 name,
-                                barcode: order.productbarcode[index],
+                                // barcode: order.productbarcode[index],
                                 brand: order.productbrand[index],
                                 type: order.productType[index],
                                 size: order.productsize[index],
                                 price: formatPrice(order.productprice[index]),
                                 quantity: order.productquantity[index],
                                 paymentMode: order.paymentmode,
-                                totalPrice: formatPrice(order.totalPrice),
+                                // totalPrice: formatPrice(order.totalPrice),
                                 orderDate: formatDate(order.orderdate),
                             })),
                         ];
@@ -78,14 +78,14 @@ const AllOrders = () => {
                         <tr key={row.srNo}>
                             <td>{row.srNo}</td>
                             <td>{row.name}</td>
-                            <td>{row.barcode}</td>
+                            {/* <td>{row.barcode}</td> */}
                             <td>{row.brand}</td>
                             <td>{row.type}</td>
                             <td className='size'>{row.size}</td>
                             <td>{row.price}</td>
                             <td>{row.quantity}</td>
                             <td>{row.paymentMode}</td>
-                            <td>{row.totalPrice}</td>
+                            {/* <td>{row.totalPrice}</td> */}
                             <td>{row.orderDate}</td>
                         </tr>
                     ))}

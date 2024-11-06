@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getAllProducts, deleteProduct } from '../api/productApi';
 import ProductTable from './ProductTable';
-import '../assets/styles/ProductList.css'
+import '../assets/styles/ProductList.css';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [rows, setRows] = useState(10);
+    const [rows, setRows] = useState(10); // Number of products per page
     const [categoryFilter, setCategoryFilter] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -25,7 +26,7 @@ const ProductList = () => {
 
     useEffect(() => {
         applyFilters();
-    }, [rows, categoryFilter, searchTerm, products]);
+    }, [rows, categoryFilter, searchTerm, products, currentPage]);
 
     const applyFilters = () => {
         let filtered = [...products];
@@ -44,7 +45,7 @@ const ProductList = () => {
             );
         }
 
-        setFilteredProducts(filtered.slice(0, rows)); // Limit number of rows displayed
+        setFilteredProducts(filtered);
     };
 
     const handleDelete = async (barcode) => {
@@ -54,6 +55,7 @@ const ProductList = () => {
 
     const handleRowsChange = (event) => {
         setRows(parseInt(event.target.value, 10));
+        setCurrentPage(1); // Reset to first page when rows per page change
     };
 
     const handleCategoryChange = (event) => {
@@ -62,6 +64,18 @@ const ProductList = () => {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
+        setCurrentPage(1); // Reset to first page when search term changes
+    };
+
+    // Pagination Logic
+    const totalPages = Math.ceil(filteredProducts.length / rows);
+    const startIndex = (currentPage - 1) * rows;
+    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + rows);
+
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
     };
 
     return (
@@ -96,7 +110,36 @@ const ProductList = () => {
                     />
                 </div>
             </div>
-            <ProductTable products={filteredProducts} setProducts={setProducts} onDelete={handleDelete} />
+
+            <ProductTable products={paginatedProducts} setProducts={setProducts} onDelete={handleDelete} />
+
+            {/* Pagination Controls */}
+            <div className="pagination">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+
+                {/* Dynamically generate page buttons */}
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index + 1}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={currentPage === index + 1 ? 'active' : ''}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 };

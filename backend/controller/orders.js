@@ -248,7 +248,6 @@ const getTotalOrdersByDate = async (req, res) => {
                 $lte: endOfDate,
             },
         }).sort({ currentTimeStamp: -1 });
-
         res.status(200).json({ count: orders.length, orders });
     } catch (error) {
         console.error("Error fetching orders for the specific date:", error);
